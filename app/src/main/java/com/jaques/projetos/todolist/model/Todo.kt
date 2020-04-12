@@ -3,4 +3,4 @@ package com.jaques.projetos.todolist.model
 import java.time.LocalDate
 
 
-data class Todo( val item: String, val completed: Boolean, val date: LocalDate? = null)
+data class Todo( var item: String, var completed: Boolean, var date: LocalDate? = null)

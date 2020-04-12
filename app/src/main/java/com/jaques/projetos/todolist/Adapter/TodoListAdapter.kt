@@ -12,12 +12,12 @@ import com.jaques.projetos.todolist.model.Todo
 import kotlinx.android.synthetic.main.todo_list.view.*
 import java.time.format.DateTimeFormatter
 
-class TodoListAdapter (val todoList: ArrayList<Todo>):
+class TodoListAdapter (val todoList: ArrayList<Todo>, val itemClickListener: OnItemClickListener):
     RecyclerView.Adapter<TodoListAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         @RequiresApi(Build.VERSION_CODES.O)
-        fun bindItems(todo: Todo): Unit {
+        fun bindItems(todo: Todo, clickListener: OnItemClickListener): Unit {
             val chbItem = itemView.chbItem
             val textViewDate:TextView = itemView.textViewDate
 
@@ -25,6 +25,9 @@ class TodoListAdapter (val todoList: ArrayList<Todo>):
             chbItem.isChecked = todo.completed
             val formater = DateTimeFormatter.ofPattern("dd/MM/yyyy")
             textViewDate.text = todo.date?.format(formater) ?: ""
+            itemView.setOnClickListener {
+                clickListener.onItemClicked(todo)
+            }
         }
     }
 
@@ -40,8 +43,11 @@ class TodoListAdapter (val todoList: ArrayList<Todo>):
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: TodoListAdapter.ViewHolder, position: Int) {
-        holder.bindItems(todoList[position])
+        val todo = todoList[position];
+        holder.bindItems(todo, itemClickListener)
     }
+}
 
-
+interface OnItemClickListener{
+    fun onItemClicked(todo: Todo)
 }

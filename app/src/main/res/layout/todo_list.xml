@@ -8,6 +8,7 @@
 
     <CheckBox
         android:id="@+id/chbItem"
+        android:clickable="false"
         android:layout_width="294dp"
         android:layout_height="wrap_content"
         android:text="CheckBox" />
